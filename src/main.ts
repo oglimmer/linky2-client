@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp } from '@vue/runtime-dom'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
