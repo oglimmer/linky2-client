@@ -12,6 +12,7 @@
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
 import {MutationTypes} from "@/store/login/mutations";
+import {store} from "@/store";
 
 @Options({
   props: {
@@ -23,7 +24,7 @@ export default class Login extends Vue {
   password = 'passwd1'
 
   get accessToken() {
-    return this.$store.state.accessToken
+    return store.state.accessToken
   }
 
   async login() {
@@ -31,7 +32,7 @@ export default class Login extends Vue {
       email: this.email,
       password: this.password
     })
-    this.$store.commit(MutationTypes.LOGIN, response.data.accessToken)
+    store.commit(MutationTypes.LOGIN, response.data.accessToken)
   }
 
 }
