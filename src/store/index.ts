@@ -25,3 +25,5 @@ export type Store = Omit<
         options?: DispatchOptions
     ): ReturnType<Actions[K]>
 }
+
+//https://dev.to/3vilarthas/vuex-typescript-m4j
