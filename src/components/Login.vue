@@ -1,19 +1,20 @@
 <template>
-  <div class="hello">
-    <h1>Login {{accessToken}}</h1>
+  <div v-if="!isLoggedIn" class="hello">
+    <h1>Login</h1>
     <form @submit.prevent="login">
       <InputText v-model="email"/>
       <Password v-model="password" :feedback="false"/>
       <Button type="submit" label="Login"/>
     </form>
   </div>
+  <div v-if="isLoggedIn" class="hello"> You're logged in. Click <router-link to="/links">here</router-link> to proceed. </div>
 
 </template>
 
 <script lang="ts">
 import {Options, Vue} from 'vue-class-component';
-import {MutationTypes} from "@/store/login/mutations";
 import {store} from "@/store";
+import {ActionTypes} from "@/store/actions";
 
 @Options({
   props: {
@@ -21,19 +22,19 @@ import {store} from "@/store";
 })
 export default class Login extends Vue {
 
+  //TODO: remove this (just for easier testing right now)
   email = 'user@bar.com'
   password = 'passwd1'
 
-  get accessToken() {
-    return store.state.accessToken
+  get isLoggedIn() {
+    return store.state.accessToken!!
   }
 
   async login() {
-    const response = await this.axios.post("http://localhost:8080/v1/users/auth", {
+    await store.dispatch(ActionTypes.LOGIN, {
       email: this.email,
       password: this.password
     })
-    store.commit(MutationTypes.LOGIN, response.data.accessToken)
   }
 
 }
